@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.sistemaproeidi.controller.InicioController">
+   <children>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="89.0" text="Sistema ProEIDI">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="139.0" fitWidth="270.0" layoutX="19.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@imagens/proeidiLogo.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="300.0" prefHeight="405.0" prefWidth="300.0" styleClass="pane_1" stylesheets="@style.css">
+         <children>
+            <TextField fx:id="CPFusuario" alignment="CENTER" layoutX="18.0" layoutY="231.0" onAction="#processarCPF" prefHeight="29.0" prefWidth="264.0" text="Toque e escreva aqui">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="43.0" layoutY="142.0" text="Digite seu CPF no campo abaixo:" textAlignment="CENTER" textFill="WHITE" />
+            <Separator layoutX="50.0" layoutY="105.0" prefWidth="200.0" />
+            <Label alignment="CENTER" layoutX="110.0" layoutY="59.0" text="Entrar" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label alignment="CENTER" layoutX="99.0" layoutY="58.0" text="Bem Vindo(a) ao" />
+   </children>
+</AnchorPane>

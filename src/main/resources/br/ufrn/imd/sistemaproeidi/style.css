@@ -1,0 +1,63 @@
+.root{
+    -fx-background-color:#EAEEF4;
+}
+
+.sideAnchorpane{
+     -fx-background-color:#288FC0;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-color: #207297;
+}
+.inner_pane{
+    -fx-background-color:#FFFFFF;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-color: #207297;
+
+}
+
+.btn_perfil{
+     -fx-background-color: #288FC0;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+    -fx-border-style: solid;
+    -fx-border-color: #1B6B8A;
+}
+
+.pane_1{
+    -fx-background-color:#1B6B8A;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-color: #ffffff;
+}
+.progress{
+     -fx-background-color:#ffffff;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+     -fx-border-style: solid;
+    -fx-border-color: #ffffff;
+}
+.pane_11{
+      -fx-background-color:#ffffff;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+     -fx-border-style: solid;
+    -fx-border-color: #ffffff;
+}
+.pane_1111{
+     -fx-background-color:#353A56;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+     -fx-border-style: solid;
+    -fx-border-color: #353A56;
+}

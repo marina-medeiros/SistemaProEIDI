@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.sistemaproeidi.controller.VerMembroController">
+    <Pane prefHeight="471.0" prefWidth="600.0">
+        <children>
+            <Pane layoutX="11.0" layoutY="14.0" prefHeight="86.0" prefWidth="575.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="14.0" text="Bem Vindo(a)," textFill="WHITE" />
+                    <Label fx:id="nomeUsuario" layoutX="14.0" layoutY="39.0" text="Nome do Usuario" textFill="WHITE">
+                        <font>
+                            <Font size="26.0" />
+                        </font>
+                    </Label>
+                </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="104.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+                <children>
+                    <Label layoutX="14.0" layoutY="5.0" text="Informacoes Pessoais:" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="206.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+                <children>
+                    <Label layoutX="14.0" layoutY="8.0" text="Telefone:" textFill="WHITE" />
+                    <Label fx:id="numeroDeTelefone" layoutX="117.0" layoutY="8.0" prefHeight="16.0" prefWidth="161.0" text="numeroDeTelefone" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="240.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+                <children>
+                    <Label layoutX="14.0" layoutY="8.0" text="Email:" textFill="WHITE" />
+                    <Label fx:id="email" layoutX="115.0" layoutY="7.0" prefHeight="16.0" prefWidth="258.0" text="email" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="278.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+                <children>
+                    <Label layoutX="11.0" layoutY="7.0" text="Curso:" textFill="WHITE" />
+                    <Label fx:id="cursoUFRN" layoutX="115.0" layoutY="6.0" prefHeight="16.0" prefWidth="307.0" text="cursoUFRN" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="16.0" layoutY="316.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+                <children>
+                    <Label layoutX="11.0" layoutY="7.0" text="Matricula:" textFill="WHITE" />
+                    <Label fx:id="matricula" layoutX="114.0" layoutY="6.0" prefHeight="16.0" prefWidth="195.0" text="matricula" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="13.0" layoutY="357.0" prefHeight="104.0" prefWidth="331.0" styleClass="pane_1111">
+                <children>
+                    <Label layoutX="11.0" layoutY="11.0" text="Numero de Faltas:" textFill="WHITE" />
+                    <Label fx:id="totalFaltas" layoutX="34.0" layoutY="44.0" prefHeight="16.0" prefWidth="73.0" text="faltas" textFill="WHITE" />
+               <ListView fx:id="listViewFaltas" layoutX="148.0" layoutY="9.0" prefHeight="86.0" prefWidth="170.0" styleClass="pane_11" />
+                </children>
+            </Pane>
+         <Pane layoutX="14.0" layoutY="138.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+            <children>
+               <Label layoutX="14.0" layoutY="5.0" text="CPF:" textFill="WHITE" />
+               <Label fx:id="CPF" layoutX="120.0" layoutY="8.0" prefHeight="16.0" prefWidth="195.0" text="cpf" textFill="WHITE" />
+            </children>
+         </Pane>
+         <Pane layoutX="13.0" layoutY="172.0" prefHeight="30.0" prefWidth="331.0" styleClass="pane_1111">
+            <children>
+               <Label layoutX="14.0" layoutY="5.0" text="Genero:" textFill="WHITE" />
+               <Label fx:id="Genero" layoutX="120.0" layoutY="5.0" prefHeight="16.0" prefWidth="319.0" text="genero" textFill="WHITE" />
+            </children>
+         </Pane>
+         <Pane layoutX="356.0" layoutY="104.0" prefHeight="359.0" prefWidth="224.0" styleClass="pane_1">
+            <children>
+               <Label layoutX="48.0" layoutY="20.0" text="Escolha uma turma" textAlignment="CENTER" textFill="WHITE" />
+               <ChoiceBox fx:id="opcoesTurmas" layoutX="36.0" layoutY="45.0" prefWidth="150.0" />
+               <Button fx:id="adicionarMembroTurma" layoutX="12.0" layoutY="86.0" mnemonicParsing="false" onAction="#clicarBtnAdicionarMembroTurma" styleClass="inner_pane" text="Adicionar Membro a Turma" />
+               <ListView fx:id="listViewTurmas" layoutX="10.0" layoutY="224.0" prefHeight="120.0" prefWidth="203.0" styleClass="pane_11" />
+               <Button fx:id="removerMembroTurma" layoutX="9.0" layoutY="121.0" mnemonicParsing="false" onAction="#clicarBtnRemoverMembroTurma" styleClass="inner_pane" text="Remover Membro da Turma" />
+               <Label layoutX="46.0" layoutY="193.0" text="Turmas do Membro:" textAlignment="CENTER" textFill="WHITE" />
+            </children>
+         </Pane>
+        </children>
+    </Pane>
+
+</AnchorPane>

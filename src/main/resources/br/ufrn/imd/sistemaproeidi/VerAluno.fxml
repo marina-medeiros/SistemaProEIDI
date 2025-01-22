@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.sistemaproeidi.controller.VerAlunoController">
+    <Pane prefHeight="500.0" prefWidth="700.0" stylesheets="@style.css">
+        <children>
+            <Pane layoutX="16.0" layoutY="14.0" prefHeight="86.0" prefWidth="668.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="14.0" text="Nome:" textFill="WHITE" />
+                    <Label fx:id="nomeUsuario" layoutX="14.0" layoutY="39.0" text="Nome do Usuario" textFill="WHITE">
+                        <font>
+                            <Font size="26.0" />
+                        </font>
+                    </Label>
+                </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="109.0" prefHeight="220.0" prefWidth="421.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="14.0" text="Informacoes Pessoais:" textFill="WHITE" />
+                    <Label layoutX="14.0" layoutY="43.0" text="Telefone:" textFill="WHITE" />
+                    <Label layoutX="13.0" layoutY="184.0" text="Sistema Operacional:" textFill="WHITE" />
+                    <Label fx:id="NumeroDeTelefone" layoutX="86.0" layoutY="43.0" text="NumeroDeTelefone" textFill="WHITE" />
+                    <Label fx:id="SO" layoutX="166.0" layoutY="184.0" text="SO" textFill="WHITE" />
+                    <Label layoutX="14.0" layoutY="70.0" text="CPF:" textFill="WHITE" />
+                    <Label fx:id="CPF" layoutX="60.0" layoutY="70.0" text="CPFdoAluno" textFill="WHITE" />
+                    <Label layoutX="13.0" layoutY="96.0" text="Genero:" textFill="WHITE" />
+                    <Label layoutX="14.0" layoutY="123.0" text="Data de Nascimento:" textFill="WHITE" />
+                    <Label layoutX="13.0" layoutY="151.0" text="Escolaridade:" textFill="WHITE" />
+                    <Label fx:id="Escolaridade" layoutX="107.0" layoutY="151.0" text="EscolaridadeAluno" textFill="WHITE" />
+                    <Label fx:id="DataDeNascimento" layoutX="159.0" layoutY="123.0" text="DataDeNascimentoAluno" textFill="WHITE" />
+                    <Label fx:id="Genero" layoutX="77.0" layoutY="96.0" text="GeneroAluno" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="445.0" layoutY="250.0" prefHeight="128.0" prefWidth="236.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="10.0" layoutY="14.0" prefHeight="16.0" prefWidth="128.0" text="Cursos Concluidos:" textFill="WHITE" />
+                    <ListView fx:id="ListViewCursos" layoutX="11.0" layoutY="36.0" prefHeight="80.0" prefWidth="216.0" styleClass="pane_11" />
+                </children>
+            </Pane>
+            <Pane layoutX="445.0" layoutY="109.0" prefHeight="128.0" prefWidth="236.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="16.0" text="Faltas:" textFill="WHITE" />
+                    <ListView fx:id="listViewFaltas" layoutX="13.0" layoutY="35.0" prefHeight="86.0" prefWidth="124.0" styleClass="pane_11" />
+                    <Label fx:id="totalFaltas" layoutX="187.0" layoutY="46.0" text="0" textFill="WHITE" />
+                    <Label layoutX="169.0" layoutY="18.0" text="Total:" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="16.0" layoutY="342.0" prefHeight="64.0" prefWidth="202.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="10.0" text="Turma Atual:" textFill="WHITE" />
+                    <Label fx:id="TurmaAtual" layoutX="14.0" layoutY="36.0" text="TurmaAtual" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="15.0" layoutY="417.0" prefHeight="64.0" prefWidth="415.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="10.0" text="Observacao de Saude:" textFill="WHITE" />
+                    <Label fx:id="ObsSaude" layoutX="14.0" layoutY="36.0" text="ObsSaude" textFill="WHITE" />
+                </children>
+            </Pane>
+            <Pane layoutX="226.0" layoutY="342.0" prefHeight="64.0" prefWidth="202.0" styleClass="pane_1">
+                <children>
+                    <Label layoutX="14.0" layoutY="10.0" text="Curso Atual:" textFill="WHITE" />
+                    <Label fx:id="CursoAtual" layoutX="14.0" layoutY="36.0" text="CursoAtual" textFill="WHITE" />
+                </children>
+            </Pane>
+         <Pane layoutX="445.0" layoutY="387.0" prefHeight="94.0" prefWidth="236.0" styleClass="pane_1">
+            <children>
+               <Label layoutX="14.0" layoutY="15.0" text="Tem Internet?" textFill="WHITE" />
+               <Label layoutX="14.0" layoutY="61.0" text="Tem Smartphone?" textFill="WHITE" />
+               <Label layoutX="14.0" layoutY="37.0" text="Tem Computador?" textFill="WHITE" />
+               <Label fx:id="Internet" layoutX="147.0" layoutY="15.0" text="Internet" textFill="WHITE" />
+               <Label fx:id="Computador" layoutX="146.0" layoutY="37.0" text="Computador" textFill="WHITE" />
+               <Label fx:id="Smartphone" layoutX="147.0" layoutY="61.0" text="Smartphone" textFill="WHITE" />
+            </children>
+         </Pane>
+        </children>
+    </Pane>
+</AnchorPane>
