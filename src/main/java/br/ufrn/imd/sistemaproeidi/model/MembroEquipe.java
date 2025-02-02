@@ -1,7 +1,7 @@
 package br.ufrn.imd.sistemaproeidi.model;
 
 import br.ufrn.imd.sistemaproeidi.model.enums.*;
-import br.ufrn.imd.sistemaproeidi.utils.InputUtils;
+import java.util.logging.Logger;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,6 +16,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
     private Cargo cargo;
     private Vector<String> codigosTurmas;
     private static BancoDAO banco = BancoDAO.getInstance();
+    private static final Logger logger = Logger.getLogger(MembroEquipe.class.getName());
 
     public MembroEquipe(String nome, String CPF, Genero genero, String numeroCelular, String matricula, String cursoUFRN, String email, Cargo cargo) {
         super(nome, CPF, genero, numeroCelular);
@@ -50,7 +51,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
 
     public boolean matricularAluno(String nome, String cpf, Genero genero, LocalDate dataNascimento, String numeroCelular, Escolaridade escolaridade, String obsSaude, boolean temInternet, boolean temComputador, boolean temSmartphone, SistemaOperacional SO, Turma turma) {
         if (Period.between(dataNascimento, LocalDate.now()).getYears() < 60) {
-            System.out.println("É necessário ser idoso para participar do projeto.");
+            logger.info("É necessário ser idoso para participar do projeto.");
             return false;
         }
 
@@ -74,26 +75,26 @@ public class MembroEquipe extends Pessoa implements Serializable {
             alunoExistente.setTemSmartphone(temSmartphone);
             alunoExistente.setSistemaOperacional(SO);
 
-            System.out.println("Informações do aluno " + alunoExistente.getNome() + " atualizadas com sucesso!");
+            logger.info("Informações do aluno " + alunoExistente.getNome() + " atualizadas com sucesso!");
         } else {
             Aluno novoAluno = new Aluno(nome, cpf, genero, numeroCelular, dataNascimento, escolaridade, obsSaude, temInternet, temComputador, temSmartphone, SO);
 
             if (!banco.getArrayPessoas().add(novoAluno)) {
-                System.out.println("Erro ao matricular!");
+                logger.info("Erro ao matricular!");
                 return false;
             }
             alunoExistente = novoAluno;
-            System.out.println("Novo aluno matriculado com sucesso!");
+            logger.info("Novo aluno matriculado com sucesso!");
         }
 
         if (Objects.equals(alunoExistente.getCodigoTurma(), turma.getCodigo())) {
-            System.out.println("Esse aluno ja está nessa turma!");
+            logger.info("Esse aluno ja está nessa turma!");
 
         }else{
             if (adicionarAlunoATurma(turma, alunoExistente)) {
-                System.out.println("Aluno " + alunoExistente.getNome() + " adicionado à turma " + turma.getNome() + " com sucesso!");
+                logger.info("Aluno " + alunoExistente.getNome() + " adicionado à turma " + turma.getNome() + " com sucesso!");
             }else{
-                System.out.println("Erro ao adicionar aluno!");
+                logger.info("Erro ao adicionar aluno!");
                 return false;
             }
 
@@ -106,9 +107,9 @@ public class MembroEquipe extends Pessoa implements Serializable {
         MembroEquipe novoMembro = new MembroEquipe(nome, cpf, genero, numeroCelular, matricula, cursoUFRN, email, cargo);
 
         if (banco.getArrayPessoas().add(novoMembro)) {
-            System.out.println("Membro da equipe cadastrado com sucesso!");
+            logger.info("Membro da equipe cadastrado com sucesso!");
         } else {
-            System.out.println("Erro ao cadastrar o membro da equipe!");
+            logger.info("Erro ao cadastrar o membro da equipe!");
             return false;
         }
         return true;
@@ -121,7 +122,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
             aluno.setCodigoTurma(turma.getCodigo());
             Vector<Aluno> alunos = turma.getAlunos();
             if(alunos.add(aluno)){
-                System.out.println("Membro adicionado com sucesso à turma " + turma.getNome());
+                logger.info("Membro adicionado com sucesso à turma " + turma.getNome());
             }
             turma.setAlunos(alunos);
             int numeroDeVagas = turma.getNumeroVagas() - 1;
@@ -129,7 +130,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
             return true;
         }
 
-        System.out.println("Turma cheia");
+        logger.info("Turma cheia");
         return false;
     }
 
@@ -137,7 +138,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
         Vector<MembroEquipe> membros = turma.getEquipe();
         if(membros.add(membro)){
             membro.getCodigosTurmas().add(turma.getCodigo());
-            System.out.println("Membro adicionado com sucesso à turma " + turma.getNome());
+            logger.info("Membro adicionado com sucesso à turma " + turma.getNome());
         }
         turma.setEquipe(membros);
     }
@@ -146,7 +147,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
         Vector<MembroEquipe> membros = turma.getEquipe();
         if(membros.remove(membro)){
             membro.getCodigosTurmas().remove(turma.getCodigo());
-            System.out.println("Membro removido com sucesso da turma " + turma.getNome());
+            logger.info("Membro removido com sucesso da turma " + turma.getNome());
         }
         turma.setEquipe(membros);
     }
@@ -155,24 +156,24 @@ public class MembroEquipe extends Pessoa implements Serializable {
         Turma turma = new Turma(nome, curso, horario, numeroVagas, dataInicio, dataTermino);
 
         if(banco.getArrayTurmas().add(turma)){
-            System.out.println("Turma cadastrada com sucesso!");
+            logger.info("Turma cadastrada com sucesso!");
         }else{
-            System.out.println("Erro ao cadastrar turma!");
+            logger.info("Erro ao cadastrar turma!");
             return false;
         }
         return true;
     }
 
     public void detalharMembroEquipe() {
-        System.out.println("=== Detalhes do Membro da Equipe ===");
-        System.out.println("Nome: " + getNome());
-        System.out.println("CPF: " + getCPF());
-        System.out.println("Gênero: " + getGenero());
-        System.out.println("Número de Celular: " + getNumeroCelular());
-        System.out.println("Matrícula: " + matricula);
-        System.out.println("Curso na UFRN: " + cursoUFRN);
-        System.out.println("E-mail: " + email);
-        System.out.println("Cargo: " + cargo);
+        logger.info("=== Detalhes do Membro da Equipe ===");
+        logger.info("Nome: " + getNome());
+        logger.info("CPF: " + getCPF());
+        logger.info("Gênero: " + getGenero());
+        logger.info("Número de Celular: " + getNumeroCelular());
+        logger.info("Matrícula: " + matricula);
+        logger.info("Curso na UFRN: " + cursoUFRN);
+        logger.info("E-mail: " + email);
+        logger.info("Cargo: " + cargo);
     }
 
     public void removerPessoaDasTurmas(Pessoa pessoa){
@@ -187,7 +188,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
                     turma.setNumeroVagas(vagas);
                 }
             }
-            System.out.println("Aluno removido com sucesso");
+            logger.info("Aluno removido com sucesso");
         } else if(pessoa instanceof MembroEquipe){
             MembroEquipe membroEquipe = (MembroEquipe) pessoa;
 
@@ -199,7 +200,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
                 }
             }
 
-            System.out.println("Membro da equipe removido com sucesso");
+            logger.info("Membro da equipe removido com sucesso");
         }
 
     }
@@ -211,6 +212,7 @@ public class MembroEquipe extends Pessoa implements Serializable {
             aluno.getCursosFeitos().add(turma.getCurso());
             aluno.setCursoAtual(Curso.NENHUM);
         }
+        logger.info("Turma concluida com sucesso");
     }
 
     public void removerTurma(Turma turma){
@@ -223,5 +225,6 @@ public class MembroEquipe extends Pessoa implements Serializable {
                 aluno.setCursoAtual(Curso.NENHUM);
             }
         }
+        logger.info("Removida com sucesso");
     }
 }

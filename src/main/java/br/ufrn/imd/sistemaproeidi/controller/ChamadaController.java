@@ -18,7 +18,6 @@ import java.util.Optional;
 
 public class ChamadaController {
 
-    @FXML private Button btn_confirmarChamada;
     @FXML private Label diaDeHoje;
     @FXML private VBox VBoxListaDePessoas;
 
@@ -47,49 +46,59 @@ public class ChamadaController {
     }
 
     @FXML
+    public void initialize() {
+        diaDeHoje.setText("Data: " + InputUtils.formatLocalDate(LocalDate.now()));
+    }
+
+    @FXML
     void adicionarBlocoPessoa(Pessoa pessoa) {
-        HBox blocoPessoa = new HBox();
-        blocoPessoa.setPrefSize(670, 90);
-        blocoPessoa.setStyle("-fx-background-color: #2F4A5F; -fx-border-radius: 10; -fx-padding: 10;");
+        HBox blocoPessoa = criarHBox(670, 90, "-fx-background-color: #2F4A5F; -fx-border-radius: 10; -fx-padding: 10;");
+        Pane panePessoa = criarPane(670, 90);
 
-        Pane panePessoa = new Pane();
-        panePessoa.setPrefSize(670, 90);
-
-        Label labelNome = new Label("NOME: " + pessoa.getNome());
-        labelNome.setLayoutX(14);
-        labelNome.setLayoutY(14);
-        labelNome.setPrefSize(500, 30);
-        labelNome.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
-
+        Label labelNome = criarLabel("NOME: " + pessoa.getNome(), 14, 14, 500, 30, "-fx-text-fill: white; -fx-font-size: 14;");
         String tipoPessoa = (pessoa instanceof Aluno) ? "Aluno" : "Membro da Equipe";
+        Label labelTipo = criarLabel(tipoPessoa, 14, 50, 500, 30, "-fx-text-fill: white; -fx-font-size: 14;");
 
-        Label labelTipo = new Label(tipoPessoa);
-        labelTipo.setLayoutX(14);
-        labelTipo.setLayoutY(50);
-        labelTipo.setPrefSize(500, 30);
-        labelTipo.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
+        CheckBox checkBoxPresenca = criarCheckBox("PRESENTE", 500, 15, "-fx-text-fill: white; -fx-font-size: 14;");
+        presenca.put(pessoa, false); // Inicializa a presença como `false`
 
-        CheckBox checkBoxPresenca = new CheckBox("PRESENTE");
-        checkBoxPresenca.setLayoutX(500);
-        checkBoxPresenca.setLayoutY(15);
-        checkBoxPresenca.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
-
-        presenca.put(pessoa, false);
-
-        checkBoxPresenca.setOnAction(event -> {
-            presenca.put(pessoa, checkBoxPresenca.isSelected());
-        });
+        checkBoxPresenca.setOnAction(event -> presenca.put(pessoa, checkBoxPresenca.isSelected()));
 
         panePessoa.getChildren().addAll(labelNome, labelTipo, checkBoxPresenca);
         blocoPessoa.getChildren().add(panePessoa);
         VBoxListaDePessoas.getChildren().add(blocoPessoa);
     }
 
-
-    @FXML
-    public void initialize() {
-        diaDeHoje.setText("Data: " + InputUtils.formatLocalDate(LocalDate.now()));
+    private CheckBox criarCheckBox(String text, double x, double y, String style) {
+        CheckBox checkBox = new CheckBox(text);
+        checkBox.setLayoutX(x);
+        checkBox.setLayoutY(y);
+        checkBox.setStyle(style);
+        return checkBox;
     }
+
+    private HBox criarHBox(double width, double height, String style) {
+        HBox hbox = new HBox();
+        hbox.setPrefSize(width, height);
+        hbox.setStyle(style);
+        return hbox;
+    }
+
+    private Pane criarPane(double width, double height) {
+        Pane pane = new Pane();
+        pane.setPrefSize(width, height);
+        return pane;
+    }
+
+    private Label criarLabel(String text, double x, double y, double width, double height, String style) {
+        Label label = new Label(text);
+        label.setLayoutX(x);
+        label.setLayoutY(y);
+        label.setPrefSize(width, height);
+        label.setStyle(style);
+        return label;
+    }
+
 
     @FXML
     public void clicarBtnConfirmarChamada(ActionEvent event) {
@@ -118,13 +127,8 @@ public class ChamadaController {
             if (!estaPresente) {
                 if (!pessoa.getFaltas().contains(hoje)) {
                     pessoa.getFaltas().add(hoje);
-                    System.out.println("Falta registrada para: " + pessoa.getNome());
-                } else {
-                    System.out.println("Falta já registrada para hoje: " + pessoa.getNome());
                 }
             }
-
-            System.out.println("Pessoa: " + pessoa.getNome() + " - Presença: " + estaPresente);
         }
     }
 }

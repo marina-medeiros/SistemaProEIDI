@@ -18,10 +18,10 @@ public class VerAlunoController {
     private Turma turmaAluno;
 
     @FXML
-    private Label CPF, Computador, Smartphone, DataDeNascimento, CursoAtual, Escolaridade, Genero, Internet, NumeroDeTelefone, ObsSaude, SO, TurmaAtual, nomeUsuario, totalFaltas;
+    private Label CPF, temComputador, temSmartphone, dataDeNascimento, cursoAtual, escolaridade, genero, temInternet, numeroDeTelefone, obsSaude, sistemaOperacional, turmaAtual, nomeUsuario, totalFaltas;
 
     @FXML
-    private ListView<String> ListViewCursos, listViewFaltas;
+    private ListView<String> listViewCursos, listViewFaltas;
 
     public void initialize() {
         System.out.println("Tela Ver carregada!");
@@ -29,7 +29,6 @@ public class VerAlunoController {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
-        aluno.detalharAluno(); //OPCIONAL
         carregarCursosFeitos();
         carregarFaltas();
         carregarDadosAluno();
@@ -44,26 +43,26 @@ public class VerAlunoController {
             setTurmaAluno();
             nomeUsuario.setText(aluno.getNome());
             CPF.setText(aluno.getCPF());
-            Genero.setText(aluno.getGenero().toString());
-            NumeroDeTelefone.setText(aluno.getNumeroCelular());
-            DataDeNascimento.setText(aluno.getDataNascimento().toString());
-            Escolaridade.setText(aluno.getEscolaridade().toString());
-            ObsSaude.setText(aluno.getObsSaude());
-            SO.setText(aluno.getSistemaOperacional().toString());
+            genero.setText(aluno.getGenero().toString());
+            numeroDeTelefone.setText(aluno.getNumeroCelular());
+            dataDeNascimento.setText(aluno.getDataNascimento().toString());
+            escolaridade.setText(aluno.getEscolaridade().toString());
+            obsSaude.setText(aluno.getObsSaude());
+            sistemaOperacional.setText(aluno.getSistemaOperacional().toString());
             if(turmaAluno != null){
-                TurmaAtual.setText(turmaAluno.getNome());
+                turmaAtual.setText(turmaAluno.getNome());
             }else{
-                TurmaAtual.setText("--");
+                turmaAtual.setText("--");
             }
             if(aluno.getCursoAtual() != null){
-                CursoAtual.setText(InputUtils.formatEnum(aluno.getCursoAtual().toString()));
+                cursoAtual.setText(InputUtils.formatEnum(aluno.getCursoAtual().toString()));
             }else{
-                CursoAtual.setText("--");
+                cursoAtual.setText("--");
             }
 
-            Internet.setText(aluno.isTemInternet() ? "Sim" : "Não");
-            Computador.setText(aluno.isTemComputador() ? "Sim" : "Não");
-            Smartphone.setText(aluno.isTemSmartphone() ? "Sim" : "Não");
+            temInternet.setText(aluno.isTemInternet() ? "Sim" : "Não");
+            temComputador.setText(aluno.isTemComputador() ? "Sim" : "Não");
+            temSmartphone.setText(aluno.isTemSmartphone() ? "Sim" : "Não");
 
             System.out.println("Dados do aluno carregados: " + aluno.getNome());
         } else {
@@ -80,7 +79,7 @@ public class VerAlunoController {
                 cursos.add(InputUtils.formatEnum(curso.toString()));
             }
 
-            ListViewCursos.setItems(cursos);
+            listViewCursos.setItems(cursos);
         }
     }
 

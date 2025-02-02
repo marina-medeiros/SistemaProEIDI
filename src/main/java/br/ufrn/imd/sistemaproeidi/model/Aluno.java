@@ -2,10 +2,7 @@ package br.ufrn.imd.sistemaproeidi.model;
 import br.ufrn.imd.sistemaproeidi.model.enums.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.Vector;
-
 
 public class Aluno extends Pessoa {
     private LocalDate dataNascimento;
@@ -41,7 +38,7 @@ public class Aluno extends Pessoa {
 
     public Vector<Curso> getCursosFeitos() {
         if (CursosFeitos == null) {
-            CursosFeitos = new Vector<>(); // Inicializa o vetor caso seja null
+            CursosFeitos = new Vector<>();
         }
         return CursosFeitos;
     }
@@ -113,33 +110,5 @@ public class Aluno extends Pessoa {
     public void setSistemaOperacional(SistemaOperacional sistemaOperacional) {
         this.sistemaOperacional = sistemaOperacional;
     }
-
-    public void detalharAluno() {
-        System.out.println("=== Detalhes do Aluno ===");
-        System.out.println("Nome: " + getNome());
-        System.out.println("CPF: " + getCPF());
-        System.out.println("Gênero: " + getGenero());
-        System.out.println("Número de Celular: " + getNumeroCelular());
-        System.out.println("Data de Nascimento: " + dataNascimento);
-        System.out.println("Idade: " + Period.between(dataNascimento, LocalDate.now()).getYears() + " anos");
-        System.out.println("Escolaridade: " + escolaridade);
-        System.out.println("Observações de Saúde: " + obsSaude);
-        System.out.println("Tem Internet: " + (temInternet ? "Sim" : "Não"));
-        System.out.println("Tem Computador: " + (temComputador ? "Sim" : "Não"));
-        System.out.println("Tem Smartphone: " + (temSmartphone ? "Sim" : "Não"));
-        System.out.println("Sistema Operacional: " + sistemaOperacional);
-        System.out.println("Curso Atual: " + (cursoAtual != null ? cursoAtual : "Nenhum"));
-
-        System.out.println("\n=== Cursos Feitos ===");
-        if (CursosFeitos == null || CursosFeitos.isEmpty()) {
-            System.out.println("Nenhum curso concluído.");
-        } else {
-            for (Curso curso : CursosFeitos) {
-                System.out.println("- " + curso);
-            }
-        }
-    }
-
-
 
 }

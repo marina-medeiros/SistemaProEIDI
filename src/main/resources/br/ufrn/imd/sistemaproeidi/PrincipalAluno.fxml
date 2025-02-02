@@ -76,20 +76,20 @@
                                     <Label layoutX="14.0" layoutY="14.0" text="Informacoes Pessoais:" textFill="WHITE" />
                                     <Label layoutX="14.0" layoutY="43.0" text="Telefone:" textFill="WHITE" />
                                     <Label layoutX="16.0" layoutY="76.0" text="Sistema Operacional:" textFill="WHITE" />
-                                    <Label fx:id="NumeroDeTelefone" layoutX="86.0" layoutY="43.0" text="NumeroDeTelefone" textFill="WHITE" />
-                                    <Label fx:id="SO" layoutX="166.0" layoutY="76.0" text="SO" textFill="WHITE" />
+                                    <Label fx:id="numeroDeTelefone" layoutX="86.0" layoutY="43.0" text="NumeroDeTelefone" textFill="WHITE" />
+                                    <Label fx:id="sistemaOperacional" layoutX="166.0" layoutY="76.0" text="SO" textFill="WHITE" />
                                  </children>
                               </Pane>
                               <Pane layoutX="13.0" layoutY="214.0" prefHeight="64.0" prefWidth="245.0" styleClass="pane_1">
                                  <children>
                                     <Label layoutX="14.0" layoutY="10.0" text="Curso Atual:" textFill="WHITE" />
-                                    <Label fx:id="CursoAtual" layoutX="14.0" layoutY="36.0" text="CursoAtual" textFill="WHITE" />
+                                    <Label fx:id="cursoAtual" layoutX="14.0" layoutY="36.0" text="CursoAtual" textFill="WHITE" />
                                  </children>
                               </Pane>
                               <Pane layoutX="264.0" layoutY="94.0" prefHeight="367.0" prefWidth="251.0" styleClass="pane_1">
                                  <children>
                                     <Label layoutX="10.0" layoutY="14.0" prefHeight="16.0" prefWidth="128.0" text="Cursos Concluidos:" textFill="WHITE" />
-                                    <ListView fx:id="ListViewCursos" layoutX="11.0" layoutY="36.0" prefHeight="317.0" prefWidth="230.0" styleClass="pane_11" />
+                                    <ListView fx:id="listViewCursos" layoutX="11.0" layoutY="36.0" prefHeight="317.0" prefWidth="230.0" styleClass="pane_11" />
                                  </children>
                               </Pane>
                               <Pane layoutX="17.0" layoutY="282.0" prefHeight="185.0" prefWidth="238.0" styleClass="pane_1">
@@ -155,7 +155,7 @@
                               <Pane layoutX="13.0" prefHeight="86.0" prefWidth="501.0" styleClass="pane_1">
                                  <children>
                                     <Label layoutX="14.0" layoutY="14.0" text="Bem Vindo(a) a turma," textFill="WHITE" />
-                                    <Label fx:id="nomeTurma" layoutX="14.0" layoutY="39.0" text="Smartphone Basico" textFill="WHITE">
+                                    <Label fx:id="nomeTurma" layoutX="14.0" layoutY="39.0" text="NOME TURMA" textFill="WHITE">
                                        <font>
                                           <Font size="21.0" />
                                        </font>
@@ -179,19 +179,19 @@
                               <Pane fx:id="pane_1111" layoutX="16.0" layoutY="125.0" prefHeight="30.0" prefWidth="493.0" styleClass="pane_1111">
                                  <children>
                                     <Label layoutX="14.0" layoutY="8.0" text="Data de Inicio:" textFill="WHITE" />
-                                    <Label fx:id="DataInicio" layoutX="137.0" layoutY="8.0" prefHeight="16.0" prefWidth="265.0" text="DataInicio" textFill="WHITE" />
+                                    <Label fx:id="dataInicio" layoutX="137.0" layoutY="8.0" prefHeight="16.0" prefWidth="265.0" text="DataInicio" textFill="WHITE" />
                                  </children>
                               </Pane>
                               <Pane fx:id="pane_11111" layoutX="16.0" layoutY="163.0" prefHeight="30.0" prefWidth="491.0" styleClass="pane_1111">
                                  <children>
                                     <Label layoutX="14.0" layoutY="8.0" text="Data de Termino:" textFill="WHITE" />
-                                    <Label fx:id="DataTermino" layoutX="137.0" layoutY="8.0" prefHeight="16.0" prefWidth="265.0" text="DataTermino" textFill="WHITE" />
+                                    <Label fx:id="dataTermino" layoutX="137.0" layoutY="8.0" prefHeight="16.0" prefWidth="265.0" text="DataTermino" textFill="WHITE" />
                                  </children>
                               </Pane>
                               <Pane fx:id="pane_111111" layoutX="16.0" layoutY="89.0" prefHeight="30.0" prefWidth="495.0" styleClass="pane_1111">
                                  <children>
                                     <Label layoutX="14.0" layoutY="8.0" text="Horario:" textFill="WHITE" />
-                                    <Label fx:id="HorarioTurma" layoutX="136.0" layoutY="8.0" prefHeight="16.0" prefWidth="262.0" text="HorarioTurma" textFill="WHITE" />
+                                    <Label fx:id="horarioTurma" layoutX="136.0" layoutY="8.0" prefHeight="16.0" prefWidth="262.0" text="HorarioTurma" textFill="WHITE" />
                                  </children>
                               </Pane>
                            </children>

@@ -15,22 +15,16 @@ import java.io.IOException;
 public class InicioController {
     @FXML
     private TextField CPFusuario;
-    private Stage primaryStage;
-
-    public void setPrimaryStage(Stage stage) {
-        this.primaryStage = stage;
-    }
 
     @FXML
     public void initialize() {
-        //Gerenciador.criarMembroPadrao();
+        Gerenciador.criarMembroPadrao();
         System.out.println("Tela inicial carregada!");
         CPFusuario.setText("");
     }
 
     public void processarCPF(){
         String cpf = InputUtils.validarCPF(CPFusuario.getText());
-        System.out.println("CPF digitado: " + cpf);
 
         if(Gerenciador.buscarPessoa(cpf) == null){
             exibirAlerta();

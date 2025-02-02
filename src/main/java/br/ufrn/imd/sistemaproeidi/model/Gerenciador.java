@@ -1,6 +1,7 @@
 package br.ufrn.imd.sistemaproeidi.model;
 
 import br.ufrn.imd.sistemaproeidi.model.enums.*;
+import java.util.logging.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Gerenciador {
     private static BancoDAO banco = BancoDAO.getInstance();
     private static final String ARQUIVO_BINARIO = "banco.bin";
     private static final Scanner scanner = new Scanner(System.in);
+    private static final Logger logger = Logger.getLogger(Gerenciador.class.getName());
 
     public static void salvarBinario() {
         ArrayList<Pessoa> pessoas = banco.getArrayPessoas();
@@ -20,9 +22,9 @@ public class Gerenciador {
             // Salvando os arrays de pessoas e turmas
             oos.writeObject(pessoas);
             oos.writeObject(turmas);
-            System.out.println("Dados salvos com sucesso no arquivo binário!");
+             logger.info("Dados salvos com sucesso no arquivo binário!");
         } catch (IOException e) {
-            System.out.println("Erro ao salvar os dados: " + e.getMessage());
+             logger.info("Erro ao salvar os dados: " + e.getMessage());
         }
     }
     @SuppressWarnings("unchecked")
@@ -39,11 +41,11 @@ public class Gerenciador {
             banco.getArrayTurmas().clear();
             banco.getArrayTurmas().addAll(turmas);
 
-            System.out.println("Dados carregados com sucesso do arquivo binário!");
+             logger.info("Dados carregados com sucesso do arquivo binário!");
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo binário não encontrado. Ele será criado ao salvar os dados.");
+             logger.info("Arquivo binário não encontrado. Ele será criado ao salvar os dados.");
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro ao carregar os dados: " + e.getMessage());
+             logger.info("Erro ao carregar os dados: " + e.getMessage());
         }
     }
 
@@ -60,26 +62,25 @@ public class Gerenciador {
             }
         }
 
-        System.out.println("Nenhuma pessoa com esse CPF foi encontrada...");
+         logger.info("Nenhuma pessoa com esse CPF foi encontrada...");
         return null;
     }
 
     public static Turma buscarTurma(String codigo){
         for (Turma turma : banco.getArrayTurmas()) {
             if (turma.getCodigo().equals(codigo)) {
-                turma.detalharTurma();
                 return turma;
             }
         }
 
-        System.out.println("Nenhuma turma com esse código foi encontrada...");
+         logger.info("Nenhuma turma com esse código foi encontrada...");
         return null;
     }
 
     public static void criarMembroPadrao() {
         String nomePadrao = "João Silva";
         String cpfPadrao = "12345678910";
-        Genero generoPadrao = Genero.MASC;
+        Genero generoPadrao = Genero.MASCULINO;
         String numeroCelularPadrao = "(84) 99982-1212";
         String matriculaPadrao = "20230001";
         String cursoPadrao = "Engenharia de Computação";

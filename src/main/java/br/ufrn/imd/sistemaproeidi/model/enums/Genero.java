@@ -1,7 +1,7 @@
 package br.ufrn.imd.sistemaproeidi.model.enums;
 
 public enum Genero {
-    FEM,
-    MASC,
+    FEMININO,
+    MASCULINO,
     OUTRO,
 }

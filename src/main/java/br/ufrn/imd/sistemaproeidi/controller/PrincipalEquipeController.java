@@ -6,6 +6,7 @@ import br.ufrn.imd.sistemaproeidi.model.enums.*;
 import br.ufrn.imd.sistemaproeidi.utils.InputUtils;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +26,9 @@ public class PrincipalEquipeController {
 
     @FXML private Tab perfilTab, turmasTab,cadastrarAlunoTab,cadastrarEquipeTab,cadastrarTurmaTab, pessoasTab;
     @FXML private TabPane tabPane;
+
     @FXML private VBox VBoxListaDeTurmas, VBoxListaDePessoas;
+
     @FXML private TextField cadastroAlunoCPF, cadastroAlunoNome, cadastroAlunoObsSaude, cadastroAlunoTelefone, cadastroEquipeCPF, cadastroEquipeCursoUFRN, cadastroEquipeEmail, cadastroEquipeMatricula, cadastroEquipeNome, cadastroEquipeTelefone;
     @FXML private TextField cadastroTurmaNome, cadastroTurmaVagas;
     @FXML private DatePicker cadastroAlunoDataNascimento, cadastroTurmaDataInicio, cadastroTurmaDataTermino;
@@ -33,8 +36,8 @@ public class PrincipalEquipeController {
     @FXML private ChoiceBox<Genero> cadastroAlunoGenero, cadastroEquipeGenero;
     @FXML private ChoiceBox<SistemaOperacional> cadastroAlunoSO;
     @FXML private ChoiceBox<Escolaridade> cadastroAlunoEscolaridade;
-    @FXML private ChoiceBox<Cargo>  cadastroEquipeCargo;
-    @FXML private ChoiceBox<Turma>  cadastroAlunoTurmaDisponiveis;
+    @FXML private ChoiceBox<Cargo> cadastroEquipeCargo;
+    @FXML private ChoiceBox<Turma> cadastroAlunoTurmaDisponiveis;
     @FXML private ChoiceBox<Horario> cadastroTurmaHorario;
     @FXML private CheckBox checkAlunoComputador, checkAlunoInternet, checkAlunoSmartphone;
     @FXML private Label nomeUsuario, cursoUFRN, email, faltas, matricula, numeroDeTelefone;
@@ -44,34 +47,13 @@ public class PrincipalEquipeController {
     private ArrayList<Pessoa> pessoas = BancoDAO.getInstance().getArrayPessoas();
     private ArrayList<Turma> turmas = BancoDAO.getInstance().getArrayTurmas();
 
-    private Stage principalSceneEquipe;
-
-    public void setPrincipalSceneEquipe(Stage stage) {
-        this.principalSceneEquipe = stage;
-    }
-
     @FXML
     public void initialize() {
         System.out.println("Tela Principal Equipe carregada!");
-        cadastroAlunoGenero.setItems(FXCollections.observableArrayList(Genero.values()));
-        cadastroEquipeGenero.setItems(FXCollections.observableArrayList(Genero.values()));
-        cadastroAlunoSO.setItems(FXCollections.observableArrayList(SistemaOperacional.values()));
-        cadastroAlunoEscolaridade.setItems(FXCollections.observableArrayList(Escolaridade.values()));
-        cadastroAlunoTurmaDisponiveis.setItems(FXCollections.observableArrayList(turmas));
-        cadastroEquipeCargo.setItems(FXCollections.observableArrayList(Cargo.values()));
-        cadastroTurmaCurso.setItems(FXCollections.observableArrayList(Curso.values()));
-        cadastroTurmaHorario.setItems(FXCollections.observableArrayList(Horario.values()));
-        cadastroAlunoDataNascimento.setValue(LocalDate.of(1964,06,20));
+
+        carregarChoiceBoxes();
         carregarTurmas();
         carregarPessoas();
-
-    }
-
-    private void exibirAlerta(String titulo, String mensagem) {
-        Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setTitle(titulo);
-        alerta.setContentText(mensagem);
-        alerta.showAndWait();
     }
 
     public void setMembroEquipe(MembroEquipe membroEquipe) {
@@ -91,9 +73,77 @@ public class PrincipalEquipeController {
         }
     }
 
+    public void carregarChoiceBoxes(){
+        cadastroAlunoGenero.setItems(FXCollections.observableArrayList(Genero.values()));
+        cadastroEquipeGenero.setItems(FXCollections.observableArrayList(Genero.values()));
+        cadastroAlunoSO.setItems(FXCollections.observableArrayList(SistemaOperacional.values()));
+        cadastroAlunoEscolaridade.setItems(FXCollections.observableArrayList(Escolaridade.values()));
+        cadastroAlunoTurmaDisponiveis.setItems(FXCollections.observableArrayList(turmas));
+        cadastroEquipeCargo.setItems(FXCollections.observableArrayList(Cargo.values()));
+        cadastroTurmaCurso.setItems(FXCollections.observableArrayList(Curso.values()));
+        cadastroTurmaHorario.setItems(FXCollections.observableArrayList(Horario.values()));
+        cadastroAlunoDataNascimento.setValue(LocalDate.of(1964,06,20));
+    }
+
+    @FXML
+    private void carregarTurmas() {
+        VBoxListaDeTurmas.getChildren().clear();
+        try {
+            for (Turma turma : turmas) {
+
+                adicionarBlocoTurma(turma);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar turmas " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void carregarPessoas() {
+        VBoxListaDePessoas.getChildren().clear();
+        try {
+            for (Pessoa pessoa : pessoas) {
+                String nome = pessoa.getNome();
+
+                adicionarBlocoPessoa(pessoa);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar pessoas " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void clicarBtnPerfil(ActionEvent event) {
+        tabPane.getSelectionModel().select(perfilTab);
+    }
+
+    @FXML
+    void clicarBtnTurmas(ActionEvent event) {
+        tabPane.getSelectionModel().select(turmasTab);
+    }
+
+    @FXML
+    void clicarBtnCadastrarAluno(ActionEvent event) {
+        tabPane.getSelectionModel().select(cadastrarAlunoTab);
+    }
+
+    @FXML
+    void clicarBtnCadastrarEquipe(ActionEvent event) {
+        tabPane.getSelectionModel().select(cadastrarEquipeTab);
+    }
+
+    @FXML
+    void clicarBtnPessoas(ActionEvent event) {
+        tabPane.getSelectionModel().select(pessoasTab);
+    }
+
+    @FXML
+    void clicarBtnTabCadastrarTurma(ActionEvent event) {
+        tabPane.getSelectionModel().select(cadastrarTurmaTab);
+    }
+
     @FXML
     public void clicarBtnCadastrarAlunoFinal(ActionEvent event) {
-        System.out.println("Botão CADASTRAR ALUNO clicado.");
 
         try {
             String nome = InputUtils.validarNome(cadastroAlunoNome.getText());
@@ -140,11 +190,8 @@ public class PrincipalEquipeController {
     }
 
 
-
-
     @FXML
     public void clicarBtnCadastrarEquipeFinal(ActionEvent event) {
-        System.out.println("Botão CADASTRAR EQUIPE clicado.");
 
         try {
             String nome = InputUtils.validarNome(cadastroEquipeNome.getText());
@@ -182,7 +229,6 @@ public class PrincipalEquipeController {
 
     @FXML
     public void clicarBtnCadastrarTurmaFinal(ActionEvent event) {
-        System.out.println("Botão CADASTRAR TURMA clicado.");
         try{
             String nome = cadastroTurmaNome.getText();
             Horario horario = (Horario) cadastroTurmaHorario.getValue();
@@ -260,205 +306,98 @@ public class PrincipalEquipeController {
     }
 
     @FXML
-    void clicarBtnPerfil(ActionEvent event) {
-        tabPane.getSelectionModel().select(perfilTab);
-        System.out.println("Botão PERFIL clicado.");
-    }
-
-    @FXML
-    void clicarBtnTurmas(ActionEvent event) {
-        tabPane.getSelectionModel().select(turmasTab);
-        System.out.println("Botão TURMAS clicado.");
-    }
-
-    @FXML
-    void clicarBtnCadastrarAluno(ActionEvent event) {
-        tabPane.getSelectionModel().select(cadastrarAlunoTab);
-        System.out.println("Botão CADASTRAR ALUNO clicado.");
-    }
-
-    @FXML
-    void clicarBtnCadastrarEquipe(ActionEvent event) {
-        tabPane.getSelectionModel().select(cadastrarEquipeTab);
-        System.out.println("Botão CADASTRAR EQUIPE clicado.");
-    }
-
-    @FXML
-    void clicarBtnPessoas(ActionEvent event) {
-        tabPane.getSelectionModel().select(pessoasTab);
-        System.out.println("Botão PESSOAS clicado.");
-    }
-
-    @FXML
-    void clicarBtnTabCadastrarTurma(ActionEvent event) {
-        tabPane.getSelectionModel().select(cadastrarTurmaTab);
-        System.out.println("Botão CADASTRAR TURMA TAB clicado.");
-    }
-
-    @FXML
-    private void carregarTurmas() {
-        VBoxListaDeTurmas.getChildren().clear();
-        try {
-            for (Turma turma : turmas) {
-
-                adicionarBlocoTurma(turma);
-            }
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar turmas " + e.getMessage());
-        }
-    }
-
-    @FXML
     void adicionarBlocoTurma(Turma turma) {
-        HBox blocoTurma = new HBox();
-        blocoTurma.setPrefSize(500, 129);
-        blocoTurma.setStyle("-fx-background-color: #2F4A5F; -fx-border-radius: 10; -fx-padding: 10;");
+        HBox blocoTurma = criarHBox(500, 129, "-fx-background-color: #2F4A5F; -fx-border-radius: 10; -fx-padding: 10;");
+        Pane paneTurma = criarPane(500, 130);
 
-        Pane paneTurma = new Pane();
-        paneTurma.setPrefSize(500, 130); // Mesma altura que o HBox
+        Label labelNome = criarLabel("NOME: " + turma.getNome(), 14, 14, 500, 30, "-fx-text-fill: white; -fx-font-size: 14;");
+        Label labelHorario = criarLabel("HORARIO: " + InputUtils.validarHorario(turma.getHorario()), 14, 44, 500, 30, "-fx-text-fill: white; -fx-font-size: 14;");
 
-        Label labelNome = new Label("NOME: " + turma.getNome());
-        labelNome.setLayoutX(14);
-        labelNome.setLayoutY(14);
-        labelNome.setPrefSize(500, 30);
-        labelNome.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
+        Button btnChamada = criarBotao("Chamada", 250, 59, 100, 30, "-fx-text-fill: black; -fx-font-size: 14;", event -> abrirTelaChamada(turma));
+        Button btnVerTurma = criarBotao("Ver", 370, 10, 100, 30, "-fx-text-fill: black; -fx-font-size: 14;", event -> abrirTelaVerTurma(turma));
+        Button btnApagar = criarBotao("Apagar", 370, 59, 100, 30, "-fx-text-fill: black; -fx-font-size: 14;", event -> apagarTurma(turma, blocoTurma));
 
-        Label horarioLabel = new Label("HORARIO: " + InputUtils.validarHorario(turma.getHorario()));
-        horarioLabel.setLayoutX(14);
-        horarioLabel.setLayoutY(44);
-        horarioLabel.setPrefSize(500, 30);
-        horarioLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
+        paneTurma.getChildren().addAll(labelNome, labelHorario, btnApagar, btnVerTurma, btnChamada);
 
-        Button btn_chamada = new Button("Chamada");
-        btn_chamada.setLayoutX(250);
-        btn_chamada.setLayoutY(59);
-        btn_chamada.setPrefSize(100, 30);
-        btn_chamada.setStyle("-fx-text-fill: black; -fx-font-size: 14;");
-
-        btn_chamada.setOnAction(event -> {
-            abrirTelaChamada(turma);
-        });
-
-        Button btn_verTurma = new Button("Ver");
-        btn_verTurma.setLayoutX(370);
-        btn_verTurma.setLayoutY(10);
-        btn_verTurma.setPrefSize(100, 30);
-        btn_verTurma.setStyle("-fx-text-fill: black; -fx-font-size: 14;");
-
-        getBtnVerTurma(btn_verTurma).setOnAction(event -> {
-            abrirTelaVerTurma(turma);
-        });
-
-        Button btn_apagar = new Button("Apagar");
-        btn_apagar.setLayoutX(370);
-        btn_apagar.setLayoutY(59);
-        btn_apagar.setPrefSize(100, 30);
-        btn_apagar.setStyle("-fx-text-fill: black; -fx-font-size: 14;");
-
-        btn_apagar.setOnAction(event -> {
-            if (exibirAlertaConfirmarApagar(turma.getNome())){
-                VBoxListaDeTurmas.getChildren().remove(blocoTurma);
-                membroEquipe.removerTurma(turma);
-            }
-        });
-
-        if(!turma.getConcluido()){
-            Button btn_concluir = new Button("Concluir");
-            btn_concluir.setLayoutX(250);
-            btn_concluir.setLayoutY(10);
-            btn_concluir.setPrefSize(100, 30);
-            btn_concluir.setStyle("-fx-text-fill: black; -fx-font-size: 14;");
-
-            paneTurma.getChildren().addAll(labelNome, horarioLabel,btn_apagar,btn_verTurma,btn_chamada,btn_concluir);
-
-            btn_concluir.setOnAction(event -> {
-                if(exibirAlertaConfirmarConcluir(turma.getNome())){
-                    membroEquipe.concluirTurma(turma);
-                    paneTurma.getChildren().remove(btn_concluir);
-                }
-            });
-
-        }else{
-            paneTurma.getChildren().addAll(labelNome, horarioLabel,btn_apagar,btn_verTurma,btn_chamada);
+        if (!turma.getConcluido()) {
+            Button btnConcluir = criarBotao("Concluir", 250, 10, 100, 30, "-fx-text-fill: black; -fx-font-size: 14;",
+                    event -> concluirTurma(turma, paneTurma));
+            paneTurma.getChildren().add(btnConcluir);
         }
 
         blocoTurma.getChildren().add(paneTurma);
-
         VBoxListaDeTurmas.getChildren().add(blocoTurma);
-    }
-
-    private static Button getBtnVerTurma(Button btn_verTurma) {
-        return btn_verTurma;
-    }
-
-    @FXML
-    private void carregarPessoas() {
-        VBoxListaDePessoas.getChildren().clear();
-        try {
-            for (Pessoa pessoa : pessoas) {
-                String nome = pessoa.getNome();
-
-                adicionarBlocoPessoa(pessoa);
-            }
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar pessoas " + e.getMessage());
-        }
     }
 
     @FXML
     void adicionarBlocoPessoa(Pessoa pessoa) {
-        HBox blocoPessoa = new HBox();
-        blocoPessoa.setPrefSize(500, 129);
-        blocoPessoa.setStyle("-fx-background-color: #2F4A5F; -fx-border-radius: 10; -fx-padding: 10;");
+        HBox blocoPessoa = criarHBox(500, 129, "-fx-background-color: #2F4A5F; -fx-border-radius: 10; -fx-padding: 10;");
+        Pane panePessoa = criarPane(500, 130);
 
-        Pane panePessoa = new Pane();
-        panePessoa.setPrefSize(500, 130);
-
-        Label labelNome = new Label("NOME: " + pessoa.getNome());
-        labelNome.setLayoutX(14);
-        labelNome.setLayoutY(14);
-        labelNome.setPrefSize(500, 30);
-        labelNome.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
-
+        Label labelNome = criarLabel("NOME: " + pessoa.getNome(), 14, 14, 500, 30, "-fx-text-fill: white; -fx-font-size: 14;");
         String tipoPessoa = (pessoa instanceof Aluno) ? "Aluno" : "Membro da Equipe";
+        Label labelTipo = criarLabel(tipoPessoa, 14, 50, 500, 30, "-fx-text-fill: white; -fx-font-size: 14;");
 
-        Label labelTipo = new Label(tipoPessoa);
-        labelTipo.setLayoutX(14);
-        labelTipo.setLayoutY(50);
-        labelTipo.setPrefSize(500, 30);
-        labelTipo.setStyle("-fx-text-fill: white; -fx-font-size: 14;");
+        Button btnVerPessoa = criarBotao("Ver", 370, 10, 100, 30, "-fx-text-fill: black; -fx-font-size: 14;", event -> abrirTelaVerPessoa(pessoa));
+        Button btnApagar = criarBotao("Apagar", 370, 59, 100, 30, "-fx-text-fill: black; -fx-font-size: 14;", event -> apagarPessoa(pessoa, blocoPessoa));
 
-
-        Button btn_verPessoa = new Button("Ver");
-        btn_verPessoa.setLayoutX(370);
-        btn_verPessoa.setLayoutY(10);
-        btn_verPessoa.setPrefSize(100, 30);
-        btn_verPessoa.setStyle("-fx-text-fill: black; -fx-font-size: 14;");
-
-        Button btn_apagar = new Button("Apagar");
-        btn_apagar.setLayoutX(370);
-        btn_apagar.setLayoutY(59);
-        btn_apagar.setPrefSize(100, 30);
-        btn_apagar.setStyle("-fx-text-fill: black; -fx-font-size: 14;");
-
-        btn_verPessoa.setOnAction(event -> {
-            abrirTelaVerPessoa(pessoa);
-        });
-
-        btn_apagar.setOnAction(event -> {
-            System.out.println("Apagar " + pessoa.getNome());
-            if (exibirAlertaConfirmarApagar(pessoa.getNome())){
-                // Remover do VBox
-                VBoxListaDePessoas.getChildren().remove(blocoPessoa);
-                pessoas.remove(pessoa);
-                membroEquipe.removerPessoaDasTurmas(pessoa);
-            }
-        });
-        panePessoa.getChildren().addAll(labelNome,btn_apagar,btn_verPessoa, labelTipo);
-
+        panePessoa.getChildren().addAll(labelNome, labelTipo, btnVerPessoa, btnApagar);
         blocoPessoa.getChildren().add(panePessoa);
-
         VBoxListaDePessoas.getChildren().add(blocoPessoa);
+    }
+
+    private HBox criarHBox(double width, double height, String style) {
+        HBox hbox = new HBox();
+        hbox.setPrefSize(width, height);
+        hbox.setStyle(style);
+        return hbox;
+    }
+
+    private Pane criarPane(double width, double height) {
+        Pane pane = new Pane();
+        pane.setPrefSize(width, height);
+        return pane;
+    }
+
+    private Label criarLabel(String text, double x, double y, double width, double height, String style) {
+        Label label = new Label(text);
+        label.setLayoutX(x);
+        label.setLayoutY(y);
+        label.setPrefSize(width, height);
+        label.setStyle(style);
+        return label;
+    }
+
+    private Button criarBotao(String text, double x, double y, double width, double height, String style, EventHandler<ActionEvent> eventHandler) {
+        Button button = new Button(text);
+        button.setLayoutX(x);
+        button.setLayoutY(y);
+        button.setPrefSize(width, height);
+        button.setStyle(style);
+        button.setOnAction(eventHandler);
+        return button;
+    }
+
+    private void apagarTurma(Turma turma, HBox blocoTurma) {
+        if (exibirAlertaConfirmar(turma.getNome(), " será apagada(o)", " será apagada(o). Deseja continuar?")) {
+            VBoxListaDeTurmas.getChildren().remove(blocoTurma);
+            membroEquipe.removerTurma(turma);
+        }
+    }
+
+    private void concluirTurma(Turma turma, Pane paneTurma) {
+        if (exibirAlertaConfirmar(turma.getNome(), " será concluido(a)", " será concluido(a). Deseja continuar?")) {
+            membroEquipe.concluirTurma(turma);
+            paneTurma.getChildren().removeIf(node -> node instanceof Button && ((Button) node).getText().equals("Concluir"));
+        }
+    }
+
+    private void apagarPessoa(Pessoa pessoa, HBox blocoPessoa) {
+        if (exibirAlertaConfirmar(pessoa.getNome(), " será apagada(o)", " será apagada(o). Deseja continuar?")) {
+            VBoxListaDePessoas.getChildren().remove(blocoPessoa);
+            pessoas.remove(pessoa);
+            membroEquipe.removerPessoaDasTurmas(pessoa);
+        }
     }
 
     private void exibirAlertaCadastroConcluido() {
@@ -468,24 +407,21 @@ public class PrincipalEquipeController {
         alerta.showAndWait();
     }
 
-    private boolean exibirAlertaConfirmarApagar(String objeto) {
+    private boolean exibirAlertaConfirmar(String objeto, String mensagem01, String mensagem02) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle(objeto + " será apagada(o)");
+        alerta.setTitle(objeto + mensagem01);
         alerta.setHeaderText(null);
-        alerta.setContentText(objeto + " será apagada(o). Deseja continuar?");
+        alerta.setContentText(objeto + mensagem02);
 
         Optional<ButtonType> resultado = alerta.showAndWait();
         return resultado.isPresent() && resultado.get() == ButtonType.OK;
     }
 
-    private boolean exibirAlertaConfirmarConcluir(String objeto) {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle(objeto + " será concluido(a)");
-        alerta.setHeaderText(null);
-        alerta.setContentText(objeto + " será concluido(a). Deseja continuar?");
-
-        Optional<ButtonType> resultado = alerta.showAndWait();
-        return resultado.isPresent() && resultado.get() == ButtonType.OK;
+    private void exibirAlerta(String titulo, String mensagem) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle(titulo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
 
     private void abrirTelaVerPessoa(Pessoa pessoa) {
@@ -494,13 +430,11 @@ public class PrincipalEquipeController {
                 FXMLLoader loader = new FXMLLoader(SistemaApplication.class.getResource("/br/ufrn/imd/sistemaproeidi/VerAluno.fxml"));
                 Parent root = loader.load();
 
-                // Obtém o controlador
                 VerAlunoController controller = loader.getController();
 
                 Aluno aluno = (Aluno) pessoa;
                 controller.setAluno(aluno);
 
-                // Configura a janela
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.setTitle("Aluno");

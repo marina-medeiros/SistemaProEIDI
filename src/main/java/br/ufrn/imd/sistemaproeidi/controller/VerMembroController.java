@@ -63,7 +63,7 @@ public class VerMembroController {
 
             listViewFaltas.setItems(listaFaltas);
         } else {
-            if (totalFaltas != null) {
+            if (totalFaltas == null) {
                 totalFaltas.setText("0");
             }
         }

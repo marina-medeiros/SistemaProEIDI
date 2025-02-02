@@ -11,7 +11,7 @@ import javafx.scene.control.ListView;
 
 public class VerTurmaController {
     @FXML
-    private Label HorarioTurma, boolConcluida, NomeTurma, Curso, Vagas, DataInicio, DataTermino;
+    private Label horarioTurma, boolConcluida, nomeTurma, curso, vagas, dataInicio, dataTermino;
 
     @FXML
     private ListView<String> listViewAlunosTurma, listViewMembrosTurma;
@@ -28,12 +28,12 @@ public class VerTurmaController {
 
     private void carregarDadosTurma() {
         if (turma != null) {
-            NomeTurma.setText(turma.getNome());
-            Curso.setText(turma.getCurso().toString());
-            HorarioTurma.setText(turma.getHorario().toString());
-            Vagas.setText(turma.getNumeroVagas().toString());
-            DataInicio.setText(turma.getDataInicio().toString());
-            DataTermino.setText(turma.getDataTermino().toString());
+            nomeTurma.setText(turma.getNome());
+            curso.setText(turma.getCurso().toString());
+            horarioTurma.setText(turma.getHorario().toString());
+            vagas.setText(turma.getNumeroVagas().toString());
+            dataInicio.setText(turma.getDataInicio().toString());
+            dataTermino.setText(turma.getDataTermino().toString());
 
             boolConcluida.setText(turma.getConcluido() ? "Sim" : "Não");
 

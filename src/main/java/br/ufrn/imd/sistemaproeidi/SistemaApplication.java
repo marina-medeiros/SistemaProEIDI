@@ -22,7 +22,6 @@ public class SistemaApplication extends Application {
     }
 
     public void stop() {
-        // Salvar os dados ao encerrar
         Gerenciador.salvarBinario();
         System.out.println("Dados salvos e aplicação encerrada.");
     }
